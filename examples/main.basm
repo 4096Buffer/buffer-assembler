@@ -1,2 +1,10 @@
-END 0 0 0;
+JMP 0 _main;
+
+_add:
+MOV 0 0 1;
+RET 0 0 0;
+
+_main:
+MOV 0 5 0;
+CALL 0 _add;
 END 0 0 0;

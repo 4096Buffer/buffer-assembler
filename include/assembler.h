@@ -12,6 +12,13 @@ typedef struct {
 	unsigned char* bytecode;
 } BASM;
 
+typedef struct {
+	char* name;
+	unsigned int address;
+} Label;
+
 
 unsigned char lookupOpcode(const char* name);
 int readFile(BASM* basm);
+int parseInstructions(BASM* basm);
+void findAddressFromLabel(int* out, Label* labels, int labels_count, char* name);
