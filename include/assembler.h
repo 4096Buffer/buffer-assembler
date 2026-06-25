@@ -9,6 +9,7 @@ typedef struct {
 	char* buffer;
 	char* path;
 	long size;
+	unsigned char* bytecode;
 } BASM;
 
 
