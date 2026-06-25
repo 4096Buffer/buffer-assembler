@@ -1,14 +1,5 @@
 #include "../include/assembler.h"
 
-unsigned char lookupType(const char* name) {
-	int count = sizeof(TYPE_TABLE) / sizeof(TYPE_TABLE[0]);
-	for (int i = 0; i < count; i++) {
-		if (strcmp(TYPE_TABLE[i].name, name) == 0) {
-			return TYPE_TABLE[i].value;
-		}
-	}
-	return -1;
-}
 
 unsigned char lookupOpcode(const char* name) {
 	int count = sizeof(OPCODE_TABLE) / sizeof(OPCODE_TABLE[0]);

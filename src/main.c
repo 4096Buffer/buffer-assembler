@@ -17,8 +17,7 @@ int main(int argc, char** argv) {
 
 	char opc_bfr[8] = "";
 	int opcode = -1;
-	char type_bfr[8] = "";
-	int type = -1;
+	int type = 0;
 	int arg1 = 0;
 	int arg2 = 0;
 	int spaces = 0;
@@ -30,12 +29,10 @@ int main(int argc, char** argv) {
 			spaces = 0;
 			arg1 = 0;
 			arg2 = 0;
-			type = -1;
+			type = 0;
 			opcode = -1;
 			opc_bfr[0] = '\0';
-			type_bfr[0] = '\0';
 
-			printf("###########END###########\n");
 			continue;
 		}
 
@@ -56,25 +53,14 @@ int main(int argc, char** argv) {
 		}
 		else if (spaces == 1) {
 			if (opcode < 0) {
-				printf("OPCODE BFR: %s\n", opc_bfr);
 				opcode = lookupOpcode(opc_bfr);
 				printf("OPCODE: %d\n", opcode);
 			}
 
-			size_t len = strlen(type_bfr);
-
-			if (len + 1 < sizeof(type_bfr)) {
-				type_bfr[len] = c;
-				type_bfr[len + 1] = '\0';
-			}
+			type = c - '0';
+			printf("TYPE: %d\n", type);
 		}
 		else if (spaces == 2) {
-			if (type < 0) {
-				type = lookupType(type_bfr);
-
-				printf("TYPE: %d\n", type);
-			}
-
 			arg1 = c - '0'; // calculate diff from two ascii numbers to get decimal
 			printf("ARG1: %d\n", arg1);
 		}

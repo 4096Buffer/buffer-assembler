@@ -12,6 +12,5 @@ typedef struct {
 } BASM;
 
 
-unsigned char lookupType(const char* name);
 unsigned char lookupOpcode(const char* name);
 int readFile(BASM* basm);
