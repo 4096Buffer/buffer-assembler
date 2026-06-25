@@ -72,9 +72,12 @@ int parseInstructions(BASM* basm) {
 	int arg2 = 0;
 	int spaces = 0;
 	int b_i = 0;
+	int bc_addr = 0;
 
 	Label labels[256]; //change to dynamic alloc in future if needed
 	int label_count = 0;
+
+	//ADD 2 LOOPS FIRST TO GET LABELS AND SECOND TO PARSE INSTRUCTIONS BECAUSE NOW YOU CANT CALL A FUNCTION BEFORE DECLARATION IN CODE
 
 	for (int i = 0; i < basm->size; i++) {
 		unsigned char c = basm->buffer[i];
@@ -87,6 +90,8 @@ int parseInstructions(BASM* basm) {
 			opcode = -1;
 			opc_bfr[0] = '\0';
 			label_bfr[0] = '\0';
+
+			bc_addr += 4;
 
 			continue;
 		}
@@ -101,7 +106,7 @@ int parseInstructions(BASM* basm) {
 		if (spaces == 0) {
 			if (c == ':') {
 				labels[label_count].name = _strdup(opc_bfr);
-				labels[label_count].address = i;
+				labels[label_count].address = bc_addr; 
 				
 				printf("NEW LABEL: %s\n", opc_bfr);
 

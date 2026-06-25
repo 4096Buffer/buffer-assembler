@@ -21,6 +21,10 @@ int main(int argc, char** argv) {
 
 	if (parseInstructions(&basm)) return 1;
 
+	for (int i = 0; i < basm.size; i++) {
+		printf("0x%X\n", (int)basm.bytecode[i]);
+	}
+
 	free(basm.buffer);
 	free(basm.bytecode);
 }
