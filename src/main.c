@@ -2,6 +2,8 @@
 #include "../include/assembler.h"
 
 int main(int argc, char** argv) {
+
+	// MOVE IT TO OTHER FUNCTION ON ASSEMBLER.C
 	char path[260];
 
 	if (!argv[1]) {
