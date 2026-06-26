@@ -82,6 +82,48 @@ int parseInstructions(BASM* basm) {
 	for (int i = 0; i < basm->size; i++) {
 		unsigned char c = basm->buffer[i];
 
+		if (c == '\n' || c == '\r' || c == '\t' || c == '\0') continue;
+
+		if (c == ';') {
+			spaces = 0;
+			label_bfr[0] = '\0';
+			bc_addr += 4;
+
+			continue;
+		}
+		
+		if (c == ':') {
+			labels[label_count].name = _strdup(label_bfr);
+			labels[label_count].address = bc_addr;
+
+			printf("NEW LABEL: %s\n", label_bfr);
+
+			label_bfr[0] = '\0';
+			label_count++;
+
+			
+			continue;
+		}
+
+		if (c == ' ') {
+			spaces++;
+			continue;
+		}
+
+		size_t len = strlen(label_bfr);
+
+		if (spaces == 0 && len + 1 < sizeof(label_bfr)) {
+			label_bfr[len] = c;
+			label_bfr[len + 1] = '\0';
+		}
+	}
+
+	spaces = 0;
+	bc_addr = 0;
+
+	for (int i = 0; i < basm->size; i++) {
+		unsigned char c = basm->buffer[i];
+
 		if (c == ';') {
 			spaces = 0;
 			arg1 = 0;
@@ -96,6 +138,12 @@ int parseInstructions(BASM* basm) {
 			continue;
 		}
 
+		if (c == ':') {
+			opc_bfr[0] = '\0';
+			spaces = 0;
+			continue;
+		}
+
 		if (c == '\n' || c == '\r' || c == '\t' || c == '\0') continue;
 
 		if (c == ' ') {
@@ -104,17 +152,6 @@ int parseInstructions(BASM* basm) {
 		}
 
 		if (spaces == 0) {
-			if (c == ':') {
-				labels[label_count].name = _strdup(opc_bfr);
-				labels[label_count].address = bc_addr; 
-				
-				printf("NEW LABEL: %s\n", opc_bfr);
-
-				opc_bfr[0] = '\0';
-				label_count++;
-				continue;
-			}
-
 			size_t len = strlen(opc_bfr);
 
 			if (len + 1 < sizeof(opc_bfr)) {
@@ -139,7 +176,8 @@ int parseInstructions(BASM* basm) {
 			printf("TYPE: %d\n", type);
 		}
 		else if (spaces == 2) {
-			if (c == '_') {
+			if (c == '_' || strlen(label_bfr) > 0) {
+				printf("FUNC DETECT\n");
 				if (basm->buffer[i + 1] == ';') {
 					int parts[2];
 
