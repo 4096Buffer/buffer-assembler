@@ -6,19 +6,23 @@
 #include "opcodes.h"
 
 typedef struct {
+	char* name;
+	unsigned int address;
+} Label;
+
+typedef struct {
 	char* buffer;
 	char* path;
 	long size;
 	unsigned char* bytecode;
+	unsigned char data[1024];
+	Label data_labels[256];
+	int data_label_count;
 } BASM;
-
-typedef struct {
-	char* name;
-	unsigned int address;
-} Label;
 
 
 unsigned char lookupOpcode(const char* name);
 int readFile(BASM* basm);
 int parseInstructions(BASM* basm);
+int parseData(BASM* basm);
 void findAddressFromLabel(int* out, Label* labels, int labels_count, char* name);

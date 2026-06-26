@@ -1,7 +1,8 @@
+
 JMP 0 _main;
 
 _add:
-MOV 0 0 1;
+PRINT 2
 RET 0 0 0;
 
 _main:

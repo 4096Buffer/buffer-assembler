@@ -62,6 +62,10 @@ void findAddressFromLabel(int* out, Label* labels, int labels_count, char* name)
 	out[1] = address & 0xFF;
 }
 
+int parseData(BASM* basm) {
+	
+}
+
 int parseInstructions(BASM* basm) {
 	char opc_bfr[8] = "";
 	char label_bfr[64] = "";
@@ -76,6 +80,8 @@ int parseInstructions(BASM* basm) {
 
 	Label labels[256]; //change to dynamic alloc in future if needed
 	int label_count = 0;
+
+	int in_data = 0;
 
 	//ADD 2 LOOPS FIRST TO GET LABELS AND SECOND TO PARSE INSTRUCTIONS BECAUSE NOW YOU CANT CALL A FUNCTION BEFORE DECLARATION IN CODE
 
