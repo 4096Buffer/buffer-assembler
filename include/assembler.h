@@ -18,6 +18,7 @@ typedef struct {
 	unsigned char data[1024];
 	Label data_labels[256];
 	int data_label_count;
+	size_t bytecode_size;
 } BASM;
 
 
@@ -26,3 +27,4 @@ int readFile(BASM* basm);
 int parseInstructions(BASM* basm);
 int parseData(BASM* basm);
 void findAddressFromLabel(int* out, Label* labels, int labels_count, char* name);
+void saveBin(BASM* basm);

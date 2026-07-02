@@ -25,6 +25,10 @@ int main(int argc, char** argv) {
 		printf("0x%X\n", (int)basm.bytecode[i]);
 	}
 
+	saveBin(&basm);
+
+	printf("Saved instructions to program.bin!\n");
+
 	free(basm.buffer);
 	free(basm.bytecode);
 }
